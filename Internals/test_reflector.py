@@ -1,4 +1,3 @@
-import sys, os
 import unittest
 from reflector import Reflector
 
@@ -27,9 +26,6 @@ class TestReflector(unittest.TestCase):
                 swapped = []
 
         self.assertTrue(bool)
-
-    
-
 
 
 if __name__ == '__name__':
