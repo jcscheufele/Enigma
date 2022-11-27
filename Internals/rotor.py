@@ -64,8 +64,8 @@ class Rotor:
         self.rotate(self.setting)
         self.rotations = 1
 
-    def rotate(self, offset=1):
-        if self.rotations == self.notch:
+    def rotate(self, force=False, offset=1):
+        if (self.rotations == self.notch) or force:
             self.alphabet = self.alphabet[offset:] + self.alphabet[:offset]
             self.rotations += offset
 

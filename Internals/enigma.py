@@ -48,7 +48,7 @@ class Enigma:
 
         tmp = self.alphabet[contact_index]
         
-        self.rotors[0].rotate()
+        self.rotors[0].rotate(force=True)
         for rotor in self.rotors[1:]:
             rotor.rotate()
 

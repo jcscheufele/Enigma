@@ -23,9 +23,20 @@ def console(rT1=0, rT2=1, rT3=2, rN1=0, rN2=0, rN3=0, refT="A", pairs=pairs_def,
 
     while(True):
         letters = input("enigma $> ")
-        output = ""
-        for letter in letters:
-            out = enigma.process(letter.upper())
-            output += out
-        print(output)
-        if reset: enigma.reset()
+        bad = False
+        '''for val in ["\n"]:
+            if val in letters:
+                bad = True'''
+        if bad: pass
+        elif letters == 'reset()':
+            enigma.reset()
+        elif letters == 'quit()':
+            exit(1)
+        else:
+            output = ""
+            for letter in letters:
+                out = enigma.process(letter.upper())
+                output += out
+            
+            print(output)
+            if reset: enigma.reset()
