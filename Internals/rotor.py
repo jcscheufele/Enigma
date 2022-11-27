@@ -61,7 +61,7 @@ class Rotor:
 
     def reset(self):
         self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        self.rotate(self.setting)
+        self.rotate(force=True, offset = self.setting)
         self.rotations = 1
 
     def rotate(self, force=False, offset=1):

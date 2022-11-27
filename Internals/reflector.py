@@ -26,16 +26,16 @@ class Reflector:
     def __init__(self, type):
         self.set_type(type)
 
-    def set_type(self, type):
-        possibleTypes = ['Beta', 'Gamma', 'A', 'B', 'C', 'B Thin', 'C Thin']#, 'ETW']
-        if type in possibleTypes:
-            if   type == "Beta":   self.type = BETA
-            elif type == "Gamma":  self.type = GAMMA
-            elif type == "A":      self.type = A
-            elif type == "B":      self.type = B
-            elif type == "C":      self.type = C
-            elif type == "B Thin": self.type = B_THIN
-            elif type == "C Thin": self.type = C_THIN
+    def set_type(self, val):
+        possibleTypes = ["Beta", "Gamma", "A", "B", "C", "B Thin", "C Thin"]#, 'ETW']
+        if val in possibleTypes:
+            if   val == "Beta":   self.type = BETA
+            elif val == "Gamma":  self.type = GAMMA
+            elif val == "A":      self.type = A
+            elif val == "B":      self.type = B
+            elif val == "C":      self.type = C
+            elif val == "B Thin": self.type = B_THIN
+            elif val == "C Thin": self.type = C_THIN
             #elif type == "ETW":    self.type = ETW
         else:
             raise Exception("Must provide correct reflector type")

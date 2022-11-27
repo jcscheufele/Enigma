@@ -25,10 +25,18 @@ class Enigma:
             rotor.reset()
 
     def process(self, input):
+        output = ""
+        for letter in input:
+            output += self.encrypt(letter)
+        return output
 
-        if input not in ALPHABET:
+    def encrypt(self, input):
+
+        if input.upper() not in ALPHABET:
             return input
-
+        else:
+            input = input.upper()
+        
         tmp = self.plugboard.output(input)
     
         contact_index = self.alphabet.index(tmp)
