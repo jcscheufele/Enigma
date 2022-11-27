@@ -10,7 +10,7 @@ import argparse
 
 class App:
     def __init__(self):
-        parser = argparse.ArgumentParser(description='This is a simulation of an Enigma Machine. Run quit() to quit and reset() to reset.')
+        parser = argparse.ArgumentParser(description='This is a simulation of an Enigma Machine. Run quit() to quit, edit() to edit the enigma machine, inter() to switch into an interactive mode, and reset() to reset.')
         parser.add_argument('-c', '--console', action="store_true", help='launch the colsole app')
         parser.add_argument('-i', '--interactive', action="store_true", help='launch the interactive colsole app.')
         parser.add_argument('-l', '--loop', action="store_true", help='Resets after each console input.')
@@ -27,7 +27,7 @@ class App:
         if args.reflector:     refT = args.reflector[0]
         else:                  refT = "A"
         if args.rotorSettings: rN1,rN2,rN3 = args.rotorSettings
-        else:                  rN1,rN2,rN3 = 0, 0, 0
+        else:                  rN1,rN2,rN3 = 1, 1, 1
         if args.rotorTypes:    rT1,rT2,rT3 = args.rotorTypes
         else:                  rT1,rT2,rT3 = 0, 1, 2
 
@@ -78,9 +78,9 @@ class App:
         
         print("Enter choices for rotor starting positions: (1-26)")
         acceptableSettings = [str(i) for i in range(1,26)]
-        rN1 = int(self.checkInput(" Rotor 1 Setting> ", acceptableSettings, 1))-1
-        rN2 = int(self.checkInput(" Rotor 2 Setting> ", acceptableSettings, 1))-1
-        rN3 = int(self.checkInput(" Rotor 3 Setting> ", acceptableSettings, 1))-1
+        rN1 = int(self.checkInput(" Rotor 1 Setting> ", acceptableSettings, 1))
+        rN2 = int(self.checkInput(" Rotor 2 Setting> ", acceptableSettings, 1))
+        rN3 = int(self.checkInput(" Rotor 3 Setting> ", acceptableSettings, 1))
 
         print("Enter choice for reflector: {Beta, Gamma, A, B, C, B Thin, C Thin}")
         acceptableRefs = ["Beta", "Gamma", "A", "B", "C", "B Thin", "C Thin"]
@@ -149,6 +149,7 @@ class App:
 
     def reader(self, file):
         print(f"Creating reader app: file: {file}\n    rT1: {self.settings[0]}, rT2: {self.settings[1]}, rT3: {self.settings[2]}, rN1: {self.settings[3]}, rN2: {self.settings[4]}, rN3: {self.settings[5]}, refT: {self.settings[6]}")
+        print(self.enigma.rotors[0].rotations)
         with open(file, 'r') as fp:
             lines = fp.readlines()
         string = f"\n\nSettings: rT1: {self.settings[0]}, rT2: {self.settings[1]}, rT3: {self.settings[2]}, rN1: {self.settings[3]}, rN2: {self.settings[4]}, rN3: {self.settings[5]}, refT: {self.settings[6]}"
@@ -163,6 +164,7 @@ class App:
                 else:
                     break
             fp.writelines(string)
+        print(self.enigma.rotors[0].rotations)
             
     def display(self):
         gui = Display(self.settings, self.enigma, self.pairs, self.loop, self.run_console)

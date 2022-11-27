@@ -79,7 +79,8 @@ class Display:
                 pass
 
     def userInterface(self, key):
-        pass
+        if key == keyboard.Key.esc:
+            exit(1)
 
     def start_thread(self):
         self.root = Tk()

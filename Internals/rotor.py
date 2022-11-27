@@ -39,11 +39,12 @@ class Rotor:
     def __init__(self, type, initial_setting):
         self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         self.set_type(type)
-        self.setting = initial_setting
+        self.initial = initial_setting
         self.wires = self.type[0]
         self.rev_wires = self.type[2]
         self.notch = letter_to_int(self.type[1])
-        self.rotations = 0
+        self.rotations = initial_setting
+        self.reset()
 
     def set_type(self, type):
         possibleTypes = [i for i in range(8)]
@@ -61,8 +62,8 @@ class Rotor:
 
     def reset(self):
         self.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        self.rotate(force=True, offset = self.setting)
-        self.rotations = 1
+        self.rotate(force=True, offset = self.initial)
+        self.rotations = self.initial
 
     def rotate(self, force=False, offset=1):
         if (self.rotations == self.notch) or force:
