@@ -19,18 +19,6 @@ class Display:
         self.full = []
         self.backspaces = 0
         
-    def start_thread(self):
-        self.root = Tk()
-        self.root.geometry("800x1000")
-
-        editing = Tk.frame(self.root)
-
-        #Create a canvas object
-        c= Canvas(self.root,width=400, height=400)
-        c.pack()
-        c.create_oval(60,60,210,210)
-        self.root.mainloop()
-
     def editEnigma(self):
         pass
 
@@ -63,7 +51,7 @@ class Display:
                 pass
             elif key == keyboard.Key.enter:
                 self.enigma.reset()
-                if self.line != "":
+                if 1 in self.full:
                     output = ""
                     cipher = self.enigma.process(self.line)
                     for i in range(len(self.full)):
@@ -76,7 +64,7 @@ class Display:
                 self.backspaces = 0
                 print(f" i-enigma $> ", end='\r')
             elif key == keyboard.Key.backspace:
-                if self.line != "":
+                if 1 in self.full:
                     #self.line = self.line[:-1]
                     self.backspaces += 1
                     self.full[len(self.line)-self.backspaces] = 0
@@ -92,17 +80,29 @@ class Display:
 
     def userInterface(self, key):
         pass
+
+    def start_thread(self):
+        self.root = Tk()
+        self.root.geometry("800x1000")
+
+        editing = Tk.frame(self.root)
+
+        #Create a canvas object
+        c= Canvas(self.root,width=400, height=400)
+        c.pack()
+        c.create_oval(60,60,210,210)
+        self.root.mainloop()
         
     def on_press(self, key):
         if self.console:
             self.interactiveConsole(key)
         else:
             self.userInterface(key)
-                
+    
 
     def headless(self):
         # aka interactive console
-        print(" enigma $>", end='\r')
+        print(" i-enigma $>                 ", end='\r')
         listener = keyboard.Listener(on_press=self.on_press, suppress=True)
         listener.start()
         listener.join()
@@ -110,8 +110,8 @@ class Display:
     
     def run(self):
         thread = threading.Thread(target=self.start_thread)
-        #thread.start()
+        thread.start()
         listener = keyboard.Listener(on_press=self.on_press, suppress=True)
         listener.start()
         listener.join()
-        #thread.join()
+        thread.join()

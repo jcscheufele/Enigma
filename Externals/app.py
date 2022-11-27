@@ -119,6 +119,7 @@ class App:
         print(f"Creating{tmp} console app: rT1: {self.settings[0]}, rT2: {self.settings[1]}, rT3: {self.settings[2]}, rN1: {self.settings[3]}, rN2: {self.settings[4]}, rN3: {self.settings[5]}, refT: {self.settings[6]}, reset: {self.loop}")
         while(True):
             if not self.interactive:
+                print("                                                                                                                                              ", end='\r')
                 letters = input(" enigma $> ")
                 bad = False
                 '''for val in ["\n"]:
