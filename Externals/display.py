@@ -1,3 +1,4 @@
+import sys
 import threading
 import time
 from pynput import keyboard
@@ -31,14 +32,14 @@ class Display:
             if (key == keyboard.Key.alt_l) or (key == keyboard.Key.alt_r):
                 # editing mode
                 self.exit_code = 2
-                exit(1)
+                sys.exit(1)
             elif key == keyboard.Key.space:
                 self.line += " "
                 print(f" |{self.enigma.rotors[0].rotations+1:02}-{self.enigma.rotors[0].type[3]}|{self.enigma.rotors[1].rotations+1:02}-{self.enigma.rotors[1].type[3]}|{self.enigma.rotors[2].rotations+1:02}-{self.enigma.rotors[2].type[3]}|{self.enigma.reflector.typeStr}| enigma £> _ | {self.line}      ", end='\r')
                 
             elif key == keyboard.Key.delete:
                 self.exit_code = 3
-                exit(1)
+                sys.exit(1)
             elif key == keyboard.Key.enter:
                 self.enigma.reset()
                 cipher = self.enigma.process(self.line)
@@ -60,13 +61,13 @@ class Display:
                 print(f" |{self.enigma.rotors[0].rotations+1:02}-{self.enigma.rotors[0].type[3]}|{self.enigma.rotors[1].rotations+1:02}-{self.enigma.rotors[1].type[3]}|{self.enigma.rotors[2].rotations+1:02}-{self.enigma.rotors[2].type[3]}|{self.enigma.reflector.typeStr}| enigma £> - | {self.line}      ", end='\r')
             elif key == keyboard.Key.esc:
                 self.exit_code = 0
-                exit(1)
+                sys.exit(1)
             else:
                 pass
 
     def userInterface(self, key):
         if key == keyboard.Key.esc:
-            exit(1)
+            sys.exit(1)
 
     def start_thread(self):
         self.root = Tk()
@@ -107,15 +108,15 @@ class Display:
         elif self.exit_code == 3:
             string = 'Exiting Application'
         
-        print(f"{string}                                                                                                                                                                 ", end='\r')
+        print(f"{string}                        ", end='\r')
         time.sleep(.5)
-        print(f"{string}.                                                                                                                                                                ", end='\r')
+        print(f"{string}.                       ", end='\r')
         time.sleep(.5)
-        print(f"{string}..                                                                                                                                                               ", end='\r')
+        print(f"{string}..                      ", end='\r')
         time.sleep(.5)
-        print(f"{string}...                                                                                                                                                              ", end='\r')
+        print(f"{string}...                     ", end='\r')
         time.sleep(.5)
-        if (self.exit_code == 0) or (self.exit_code == 1): print("                                                                                                      ", end='\r')
+        if (self.exit_code == 0) or (self.exit_code == 1): print("                                                                  ", end='\r')
         if (self.exit_code == 0) or (self.exit_code == 1): print("General Console Controls: Type input and press enter to see output, type quit() to quit, reset() to reset machine, edit() to edit machine, and inter() to start the interactive mode.")
 
         return self.exit_code

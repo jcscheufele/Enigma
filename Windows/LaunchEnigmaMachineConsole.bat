@@ -1,0 +1,1 @@
+call "D:\Documents_1\WPI\Computer Science\Cryptography\Enigma\Windows\release\main\main.exe" -i -l

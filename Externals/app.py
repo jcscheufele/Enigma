@@ -1,3 +1,4 @@
+import sys
 import time
 import keyboard
 from Internals.plugboard import Plugboard
@@ -5,6 +6,7 @@ from Internals.reflector import Reflector
 from Internals.rotor import Rotor
 from Internals.enigma import Enigma
 from Externals.display import Display
+
 
 
 import argparse
@@ -147,7 +149,7 @@ class App:
                     self.enigma.reset()
                 elif letters == 'quit()': 
                     self.exitingApp()
-                    exit(1)
+                    sys.exit(1)
                 else:
                     output = ""
                     for letter in letters:
@@ -156,14 +158,14 @@ class App:
                     print(output)
                     if self.loop: self.enigma.reset()
             else:
-                print("Interactive Console Controls: Alt -> Edit Machine, Esc -> Exit, Press any key to see the cipher.")
+                print("Interactive Console Controls: Alt -> Edit Machine, Esc -> Exit to General Console, Del -> Close Application, Press any key to see the cipher. Press enter to see the full cipher decrypted.")
                 inter_console = Display(self.settings, self.enigma, self.pairs, self.loop, self.interactive)
                 self.interactive = inter_console.headless()
                 if self.interactive != 0 and self.interactive != 1:
                     if self.interactive == 2:
                         self.edit_enigma()
                     elif self.interactive == 3:
-                        exit(1)
+                        sys.exit(1)
 
 
 
