@@ -78,9 +78,9 @@ class App:
         
         print("Enter choices for rotor starting positions: (1-26)")
         acceptableSettings = [str(i) for i in range(1,26)]
-        rN1 = int(self.checkInput(" Rotor 1 Setting> ", acceptableSettings, 1))
-        rN2 = int(self.checkInput(" Rotor 2 Setting> ", acceptableSettings, 1))
-        rN3 = int(self.checkInput(" Rotor 3 Setting> ", acceptableSettings, 1))
+        rN1 = int(self.checkInput(" Rotor 1 Setting> ", acceptableSettings, 1))-1
+        rN2 = int(self.checkInput(" Rotor 2 Setting> ", acceptableSettings, 1))-1
+        rN3 = int(self.checkInput(" Rotor 3 Setting> ", acceptableSettings, 1))-1
 
         print("Enter choice for reflector: {Beta, Gamma, A, B, C, B Thin, C Thin}")
         acceptableRefs = ["Beta", "Gamma", "A", "B", "C", "B Thin", "C Thin"]
@@ -117,10 +117,12 @@ class App:
         if self.interactive: tmp = ' Interactive'
         else: tmp = ''
         print(f"Creating{tmp} console app: rT1: {self.settings[0]}, rT2: {self.settings[1]}, rT3: {self.settings[2]}, rN1: {self.settings[3]}, rN2: {self.settings[4]}, rN3: {self.settings[5]}, refT: {self.settings[6]}, reset: {self.loop}")
+        if not self.interactive: 
+            print("General Console Controls: Type input and press enter to see output, type quit() to quit, reset() to reset machine, edit() to edit machine, and inter() to start the interactive mode.")
         while(True):
             if not self.interactive:
-                print("                                                                                                                                              ", end='\r')
-                letters = input(" enigma $> ")
+                print(f"                                                                                                                                              ", end='\r')
+                letters = input(f" |{self.enigma.rotors[0].rotations+1:02}|{self.enigma.rotors[1].rotations+1:02}|{self.enigma.rotors[2].rotations+1:02}| enigma $> ")
                 bad = False
                 '''for val in ["\n"]:
                     if val in letters:
@@ -141,9 +143,13 @@ class App:
                     print(output)
                     if self.loop: self.enigma.reset()
             else:
-                print("Press esc to escape interactive mode.")
+                print("Interactive Console Controls: Esc -> Exit, Press any key to ")
                 inter_console = Display(self.settings, self.enigma, self.pairs, self.loop, self.interactive)
                 self.interactive = inter_console.headless()
+                if self.interactive != 0 and self.interactive != 1:
+                    if self.interactive == 2:
+                        self.edit_enigma()
+
 
 
 
