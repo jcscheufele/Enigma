@@ -1,16 +1,12 @@
+import re
 import sys
 import time
-import keyboard
-import re
+import argparse
 from Internals.plugboard import Plugboard
 from Internals.reflector import Reflector
 from Internals.rotor import Rotor
 from Internals.enigma import Enigma
 from Externals.display import Display
-
-
-
-import argparse
 
 class App:
     def __init__(self):
