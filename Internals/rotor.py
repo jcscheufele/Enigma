@@ -66,9 +66,10 @@ class Rotor:
         self.rotations = self.initial
 
     def rotate(self, force=False, offset=1):
-        if (self.rotations == self.notch) or force:
+        if force:
             self.alphabet = self.alphabet[offset:] + self.alphabet[:offset]
-            self.rotations += offset
+            self.rotations = ((self.rotations + offset) % 26)
+        return ((self.rotations+1) == self.notch)
 
     def forward(self, letter):
         return self.wires[letter]

@@ -56,9 +56,11 @@ class Enigma:
 
         tmp = self.alphabet[contact_index]
         
-        self.rotors[0].rotate(force=True)
+        turn_first = self.rotors[0].rotate(force=True)
+        if turn_first: turn_next = True
+        else: turn_next = False
         for rotor in self.rotors[1:]:
-            rotor.rotate()
+            turn_next = rotor.rotate(force=(turn_next and turn_first))
 
         tmp = self.plugboard.output(tmp)
         return tmp

@@ -149,7 +149,7 @@ class App:
 
     def reader(self, file):
         print(f"Creating reader app: file: {file}\n    rT1: {self.settings[0]}, rT2: {self.settings[1]}, rT3: {self.settings[2]}, rN1: {self.settings[3]}, rN2: {self.settings[4]}, rN3: {self.settings[5]}, refT: {self.settings[6]}")
-        print(self.enigma.rotors[0].rotations)
+        print(self.enigma.rotors[0].rotations, self.enigma.rotors[1].rotations, self.enigma.rotors[2].rotations)
         with open(file, 'r') as fp:
             lines = fp.readlines()
         string = f"\n\nSettings: rT1: {self.settings[0]}, rT2: {self.settings[1]}, rT3: {self.settings[2]}, rN1: {self.settings[3]}, rN2: {self.settings[4]}, rN3: {self.settings[5]}, refT: {self.settings[6]}"
@@ -164,7 +164,7 @@ class App:
                 else:
                     break
             fp.writelines(string)
-        print(self.enigma.rotors[0].rotations)
+        print(self.enigma.rotors[0].rotations, self.enigma.rotors[1].rotations, self.enigma.rotors[2].rotations)
             
     def display(self):
         gui = Display(self.settings, self.enigma, self.pairs, self.loop, self.run_console)
