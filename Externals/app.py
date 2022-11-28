@@ -1,6 +1,7 @@
 import sys
 import time
 import keyboard
+import re
 from Internals.plugboard import Plugboard
 from Internals.reflector import Reflector
 from Internals.rotor import Rotor
@@ -88,7 +89,6 @@ class App:
         print("Enter choice for reflector: {Beta, Gamma, A, B, C, B Thin, C Thin}")
         acceptableRefs = ["Beta", "Gamma", "A", "B", "C", "B Thin", "C Thin"]
         refT = self.checkInput(" Reflector Type> ", acceptableRefs, "A")
-        print(refT)
         self.settings = [rT1, rT2, rT3, rN1, rN2, rN3, refT]
         rotor_1 = Rotor(type=rT1, initial_setting=rN1)
         rotor_2 = Rotor(type=rT2, initial_setting=rN2)
@@ -96,13 +96,58 @@ class App:
 
         reflector = Reflector(type=refT)
 
-        self.pairs = [
+        def_pairs = [
             ("A", "J"), ("C", "V"),
             ("X", "R"), ("T", "Z"),
             ("Q", "K"), ("G", "S"),
             ("B", "L"), ("M", "W"),
             ("P", "O"), ("D", "I")
         ]
+        pairs = []
+        print("Enter choices for plugboard: provide two capitalized letters at a time, no repeats")
+        thing = re.compile("[A-Za-z]{2}")
+        good = False
+        for i in range(10):
+            while True:
+                tmp = input(" Plugboard Pair> ")
+                
+                if tmp == " ":
+                    break
+                elif tmp == "def":
+                    break
+                elif (not thing.match(tmp)) or (len(tmp) > 2) or (tmp[0]==tmp[1]):
+                    print("Please enter a valid value.")
+                else:
+                    singles = [tmp[0].upper(), tmp[1].upper()]
+                    broken = False
+                    for combo in pairs:
+                        if combo[0] not in singles:
+                            singles.append(combo[0])
+                        else:
+                            broken = True
+                            break
+                        if combo[1] not in singles:
+                            singles.append(combo[1])
+                        else:
+                            broken = True
+                            break
+                    if not broken: pairs.append((tmp[0].upper(), tmp[1].upper()))
+                    else: 
+                        print("Duplicate, please enter a valid pair.")
+                        break
+                    break
+            print("     Current Pairs: ", pairs)
+            if tmp == " ":
+                self.pairs = pairs
+                break
+            elif tmp == "def":
+                self.pairs = def_pairs
+                break
+            else:
+                good = True
+
+        if good: self.pairs = pairs
+        print("     Selected Pairs", self.pairs)
         plugboard = Plugboard(pairs=self.pairs)
 
         self.enigma = Enigma(
