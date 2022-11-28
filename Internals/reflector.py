@@ -37,6 +37,7 @@ class Reflector:
             elif val == "B Thin": self.type = B_THIN
             elif val == "C Thin": self.type = C_THIN
             #elif type == "ETW":    self.type = ETW
+            self.typeStr = val
         else:
             raise Exception("Must provide correct reflector type")
 

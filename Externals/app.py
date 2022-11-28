@@ -1,3 +1,4 @@
+import time
 import keyboard
 from Internals.plugboard import Plugboard
 from Internals.reflector import Reflector
@@ -113,6 +114,16 @@ class App:
         print(f"Creating{tmp} console app: rT1: {self.settings[0]}, rT2: {self.settings[1]}, rT3: {self.settings[2]}, rN1: {self.settings[3]}, rN2: {self.settings[4]}, rN3: {self.settings[5]}, refT: {self.settings[6]}, reset: {self.loop}")
         
 
+    def exitingApp(self):
+        string = 'Exiting Application'
+        print(f"{string}                                                                                                                                              ", end='\r')
+        time.sleep(.5)
+        print(f"{string}.                                                                                                                                              ", end='\r')
+        time.sleep(.5)
+        print(f"{string}..                                                                                                                                             ", end='\r')
+        time.sleep(.5)
+        print(f"{string}...                                                                                                                                            ", end='\r')
+
     def console(self):
         if self.interactive: tmp = ' Interactive'
         else: tmp = ''
@@ -122,7 +133,7 @@ class App:
         while(True):
             if not self.interactive:
                 print(f"                                                                                                                                              ", end='\r')
-                letters = input(f" |{self.enigma.rotors[0].rotations+1:02}|{self.enigma.rotors[1].rotations+1:02}|{self.enigma.rotors[2].rotations+1:02}| enigma $> ")
+                letters = input(f" |{self.enigma.rotors[0].rotations+1:02}-{self.enigma.rotors[0].type[3]}|{self.enigma.rotors[1].rotations+1:02}-{self.enigma.rotors[1].type[3]}|{self.enigma.rotors[2].rotations+1:02}-{self.enigma.rotors[2].type[3]}|{self.enigma.reflector.typeStr}| enigma $> ")
                 bad = False
                 '''for val in ["\n"]:
                     if val in letters:
@@ -134,7 +145,9 @@ class App:
                     self.edit_enigma()
                     letters = ""
                     self.enigma.reset()
-                elif letters == 'quit()': exit(1)
+                elif letters == 'quit()': 
+                    self.exitingApp()
+                    exit(1)
                 else:
                     output = ""
                     for letter in letters:
@@ -143,12 +156,14 @@ class App:
                     print(output)
                     if self.loop: self.enigma.reset()
             else:
-                print("Interactive Console Controls: Esc -> Exit, Press any key to ")
+                print("Interactive Console Controls: Alt -> Edit Machine, Esc -> Exit, Press any key to see the cipher.")
                 inter_console = Display(self.settings, self.enigma, self.pairs, self.loop, self.interactive)
                 self.interactive = inter_console.headless()
                 if self.interactive != 0 and self.interactive != 1:
                     if self.interactive == 2:
                         self.edit_enigma()
+                    elif self.interactive == 3:
+                        exit(1)
 
 
 
